@@ -44,7 +44,9 @@ Your `.csproj` must reference these DLLs from the Rain World installation:
 ### Building
 
 #### Target
-Make sure to check and update the target folder inside the 
+Make sure to check and update the target folder inside the `.csproj` file.
+
+#### Build the Project
 Once everything is ready, you can build the project with these commands:
 
 ```

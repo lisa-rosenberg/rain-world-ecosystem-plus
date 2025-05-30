@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <OutputType>Library</OutputType>
+    <RootNamespace>EcosystemPlus</RootNamespace>
+    <AssemblyName>EcosystemPlus</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>S:\Games\SteamLibrary\steamapps\common\Rain World\RainWorld_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+
+    <Reference Include="UnityEngine">
+      <HintPath>S:\Games\SteamLibrary\steamapps\common\Rain World\RainWorld_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>S:\Games\SteamLibrary\steamapps\common\Rain World\RainWorld_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+
+    <Reference Include="BepInEx">
+      <HintPath>S:\Games\SteamLibrary\steamapps\common\Rain World\BepInEx\core\BepInEx.dll</HintPath>
+    </Reference>
+
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>S:\Games\SteamLibrary\steamapps\common\Rain World\BepInEx\core\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+
+    <Reference Include="RWCustom">
+      <HintPath>S:\Games\SteamLibrary\steamapps\common\Rain World\RainWorld_Data\Managed\RWCustom.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Copy SourceFiles="$(OutputPath)\$(AssemblyName).dll"
+          DestinationFolder="S:\Games\SteamLibrary\steamapps\common\Rain World\BepInEx\plugins\EcosystemPlus\" />
+  </Target>
+
+</Project>

@@ -6,36 +6,42 @@
 Adds dynamic food-seeking behavior, grazing, and hunger to non-player creatures. Enhances ecosystem realism with food competition, AI hibernation, and inter-species predation.
 
 ### Current State
-As of now, this project is WIP and not working!
+This project is currently a work in progress (WIP) and not yet functional.
 
 ## For Developers
-To build and extend this mod, make sure the following tools and steps are set up correctly:
+**Note:** The following guide was written with myself in mind while learning how to set everything up - mainly as a future reference if I ever have to go through this madness again. 😄
+
+To build and extend this mod, ensure the following tools and steps are completed.
 
 ### Requirements
-* Rain World (Steam) – Latest Version
-* .NET Framework Developer Pack 4.7.2 → Install via Visual Studio Installer (check .NET desktop development workload)
-  * You may need to add msbuild to your environment variables `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin` in order to use the command in the CLI
-  * You only need the `.NET desktop build tools` from it
-  * Looking into "Individual components", make sure these two are included:
-    * .NET Framework 4.7.2 targeting pack
-    * .NET Framework 4.7.2 SDK
-* BepInEx 5 for Rain World
-  * Download the latest version from here: https://github.com/BepInEx/BepInEx/releases
-  * Extract the files and copy them into your Rain World folder, e.g.: `S:\Games\SteamLibrary\steamapps\common\Rain World`
-* NuGet: https://www.nuget.org/downloads/ - you"ll only need the nuget.exe file, nothing else. You may add the folder into your environment variables.
-* HookGen: See section "HookGen" for more information
 
-* Some IDE (e.g. JetBrains Rider, VSCode, or Visual Studio)
+- **Rain World (Steam)** – Latest Version
+- **.NET Framework Developer Pack 4.7.2**
+  - Install via Visual Studio Installer with the `.NET desktop development` workload
+  - Add `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin` to your environment variables if needed
+  - Required components (can be selected under "Individual components"):
+    - .NET Framework 4.7.2 targeting pack
+    - .NET Framework 4.7.2 SDK
+- **BepInEx 5 for Rain World**
+  - Download: https://github.com/BepInEx/BepInEx/releases
+  - Extract into your Rain World directory, e.g., `S:\Games\SteamLibrary\steamapps\common\Rain World`
+- **NuGet CLI**
+  - Download `nuget.exe` from https://www.nuget.org/downloads/
+  - Optional: add the containing folder to your environment variables
+- **HookGen** – see section below
+- A C#-compatible IDE (e.g., JetBrains Rider, Visual Studio, or VSCode) (I use VSCode)
 
 ### Folder Structure
-Clone or develop in your own folder (e.g. `F:\Development\RainWorld\EcosystemPlus`) and do not develop directly inside the Rain World directory.
 
-Compiled binaries are automatically copied into `Rain World/BepInEx/plugins/EcosystemPlus/` using the PostBuild step.
+Clone the project into a separate directory, e.g., `F:\Development\RainWorld\EcosystemPlus`. Do **not** modify files directly in the Rain World folder.
+
+Compiled binaries are copied into `Rain World/BepInEx/plugins/EcosystemPlus/` automatically via a post-build step.
 
 ### Required DLL References
-Your `.csproj` must reference these DLLs from the Rain World installation:
 
-```
+Your `.csproj` file must reference these DLLs from the Rain World install:
+
+```xml
 <HintPath>[YourRainWorldDir]\RainWorld_Data\Managed\Assembly-CSharp.dll</HintPath>
 <HintPath>[YourRainWorldDir]\RainWorld_Data\Managed\UnityEngine.dll</HintPath>
 <HintPath>[YourRainWorldDir]\RainWorld_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
@@ -45,65 +51,62 @@ Your `.csproj` must reference these DLLs from the Rain World installation:
 ```
 
 ### HookGen
-One way is to get the HookGen binaries via NuGet with this command: `nuget install MonoMod.RuntimeDetour.HookGen -Version 22.7.31.1 -OutputDirectory F:\Tools\NuGet\HookGenTemp`.
 
-After this, you need to collect the following `.dll` files from the subfolders, as `.exe` files don't automatically load nearby dependencies unless they are in the same folder. If they are not present in these subfolders, use the `.dll` files from nearby subfolders as stated below.
+Run this command to install HookGen via NuGet:
 
-```
-F:\Tools\NuGet\HookGenTemp\MonoMod.22.7.31.1\lib\net452\MonoMod.dll (or F:\Tools\NuGet\HookGenTemp\MonoMod.22.7.31.1\lib\netstandard2.0\MonoMod.dll)
-F:\Tools\NuGet\HookGenTemp\MonoMod.RuntimeDetour.22.7.31.1\lib\net452\MonoMod.RuntimeDetour.dll
-F:\Tools\NuGet\HookGenTemp\MonoMod.Utils.22.7.31.1\lib\net452\MonoMod.Utils.dll
-F:\Tools\NuGet\HookGenTemp\Mono.Cecil.0.11.4\lib\net452\Mono.Cecil.dll (or F:\Tools\NuGet\HookGenTemp\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.dll)
+```powershell
+nuget install MonoMod.RuntimeDetour.HookGen -Version 22.7.31.1 -OutputDirectory F:\Tools\NuGet\HookGenTemp
 ```
 
-Put all of these files into `F:\Tools\NuGet\HookGenTemp\MonoMod.RuntimeDetour.HookGen.22.7.31.1\lib\net452`. Your folder should look like this:
+Afterwards, copy the following `.dll` files into the same directory as `MonoMod.RuntimeDetour.HookGen.exe`:
 
-```
-PS F:\Tools\NuGet\HookGenTemp\MonoMod.RuntimeDetour.HookGen.22.7.31.1\lib\net452> ls
-
-    Directory: F:\Tools\NuGet\HookGenTemp\MonoMod.RuntimeDetour.HookGen.22.7.31.1\lib\net452
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
--a---            7/2/2021 12:17 AM         358400 Mono.Cecil.dll
--a---           7/31/2022  6:33 PM          68096 MonoMod.dll
--a---           7/31/2022  6:33 PM         112128 MonoMod.RuntimeDetour.dll
--a---           7/31/2022  6:33 PM          24576 MonoMod.RuntimeDetour.HookGen.exe
--a---           7/31/2022  6:33 PM            154 MonoMod.RuntimeDetour.HookGen.xml
--a---           7/31/2022  6:33 PM         197632 MonoMod.Utils.dll
-
+```text
+Mono.Cecil.dll
+MonoMod.dll
+MonoMod.RuntimeDetour.dll
+MonoMod.Utils.dll
 ```
 
-HookGen is needed to create hook files.
+Use versions compatible with `net452` if available. If not, fallback to `netstandard2.0` or `net40` as needed.
+
+Your folder should contain:
+
+```text
+Mono.Cecil.dll
+MonoMod.dll
+MonoMod.RuntimeDetour.dll
+MonoMod.RuntimeDetour.HookGen.exe
+MonoMod.RuntimeDetour.HookGen.xml
+MonoMod.Utils.dll
+```
+
+### Generating Hookable Delegates
+
+Navigate to the directory containing HookGen and run:
+
+```powershell
+& '.\MonoMod.RuntimeDetour.HookGen.exe' 'S:\Games\SteamLibrary\steamapps\common\Rain World\RainWorld_Data\Managed\Assembly-CSharp.dll'
+```
+
+This generates the `MMHOOK_Assembly-CSharp.dll` which contains hookable delegate definitions (e.g., `On.NeedleWormAI`).
 
 ### Building
 
-#### Hooks
-The following command (execute it inside `F:\Tools\NuGet\HookGenTemp\MonoMod.RuntimeDetour.HookGen.22.7.31.1\lib\net452`) will create the needed hook for the `Assembly-CSharp.dll` file.
+Ensure your `.csproj` file's output path points to your BepInEx plugin directory.
 
-```
-PS F:\Tools\NuGet\HookGenTemp\MonoMod.RuntimeDetour.HookGen.22.7.31.1\lib\net452> & '.\MonoMod.RuntimeDetour.HookGen.exe' 'S:\Games\SteamLibrary\steamapps\common\Rain World\RainWorld_Data\Managed\Assembly-CSharp.dll'
-MonoMod.RuntimeDetour.HookGen 22.7.31.1
-using MonoMod 22.7.31.1
-using MonoMod.RuntimeDetour 22.7.31.1
-[MonoMod] Reading input file into module.
-[MonoMod] [HookGen] Starting HookGenerator
-[MonoMod] [HookGen] Done.
-```
+To build the project:
 
-#### Target
-Make sure to check and update the target folder inside the `.csproj` file. The target needs to point to your mod project inside BepInEx.
-
-#### Build the Project
-Once everything is ready, you can build the project with these commands:
-
-```
+```powershell
 msbuild /t:Clean EcosystemPlus.csproj
 msbuild EcosystemPlus.csproj
 ```
 
-Or use equivalent actions to build the solution (`.sln`). The DLL is automatically copied to the BepInEx plugin folder after build.
+Or use the build action from your IDE.
 
-When Rain World launches, BepInEx will log plugin load messages in the console and `BepInEx/LogOutput.log`.
+On launch, Rain World will load your plugin and output logs to:
 
-Check the BepInEx log at `RainWorld/BepInEx/LogOutput.log` to ensure your mod is being loaded.
+```text
+RainWorld\BepInEx\LogOutput.log
+```
+
+Check the logs for loading confirmation and error diagnostics.

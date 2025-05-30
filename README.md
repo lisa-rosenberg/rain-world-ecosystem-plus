@@ -14,10 +14,15 @@ To build and extend this mod, make sure the following tools and steps are set up
 ### Requirements
 * Rain World (Steam) – Latest Version
 * .NET Framework Developer Pack 4.7.2 → Install via Visual Studio Installer (check .NET desktop development workload)
-* BepInEx 5 for Rain World → Installed in your Rain World folder
-  * You may need to change %USERPROFILE%\AppData\Local\Microsoft\WindowsApps;C:\Users\lisar\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\lisar\AppData\Local\Microsoft\WinGet\Packages\Git.MinGit_Microsoft.Winget.Source_8wekyb3d8bbwe\cmd;F:\Tools\SDK\EclipseAdoptium.Temurin.24.JDK\bin;%USERPROFILE%\.dotnet\tools;C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin;
+  * You may need to add msbuild to your environment variables `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin` in order to use the command in the CLI
+  * You only need the `.NET desktop build tools` from it
+  * Looking into "Individual components", make sure these two are included:
+    * .NET Framework 4.7.2 targeting pack
+    * .NET Framework 4.7.2 SDK
+* BepInEx 5 for Rain World
+  * Download the latest version from here: https://github.com/BepInEx/BepInEx/releases
+  * Extract the files and copy them into your Rain World folder, e.g.: `S:\Games\SteamLibrary\steamapps\common\Rain World`
 * Some IDE (e.g. JetBrains Rider, VSCode, or Visual Studio)
-* Visual Studio or JetBrains Rider (recommended for C#)
 
 ### Folder Structure
 Clone or develop in your own folder (e.g. `F:\Development\RainWorld\EcosystemPlus`) and do not develop directly inside the Rain World directory.
@@ -37,6 +42,9 @@ Your `.csproj` must reference these DLLs from the Rain World installation:
 ```
 
 ### Building
+
+#### Target
+Make sure to check and update the target folder inside the 
 Once everything is ready, you can build the project with these commands:
 
 ```

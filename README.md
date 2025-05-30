@@ -3,10 +3,10 @@
 ## Description
 
 ### Goal
-Adds dynamic food-seeking behavior, grazing, and hunger to non-player creatures. Enhances ecosystem realism with food competition, AI hibernation, and inter-species predation.
+EcosystemPlus aims to enhance the realism of Rain World's ecosystem by adding dynamic AI behaviors such as grazing, food-seeking, hunger-driven actions, and inter-species predation. It introduces resource competition, optional AI hibernation mechanics, and an overall more immersive food chain.
 
 ### Current State
-This project is currently a work in progress (WIP) and not yet functional.
+⚠️ Work in Progress – This mod is not yet fully functional.
 
 ## For Developers
 **Note:** The following guide was written with myself in mind while learning how to set everything up - mainly as a future reference if I ever have to go through this madness again. 😄
@@ -29,7 +29,7 @@ To build and extend this mod, ensure the following tools and steps are completed
   - Download `nuget.exe` from https://www.nuget.org/downloads/
   - Optional: add the containing folder to your environment variables
 - **HookGen** – see section below
-- A C#-compatible IDE (e.g., JetBrains Rider, Visual Studio, or VSCode) (I use VSCode)
+- A C#-compatible IDE (e.g., JetBrains Rider, Visual Studio, or VSCode)
 
 ### Folder Structure
 
@@ -51,6 +51,7 @@ Your `.csproj` file must reference these DLLs from the Rain World install:
 ```
 
 ### HookGen
+To hook into Rain World's internal classes and methods (e.g. AI behaviors), you need to generate hookable delegates using HookGen.
 
 Run this command to install HookGen via NuGet:
 
@@ -58,7 +59,7 @@ Run this command to install HookGen via NuGet:
 nuget install MonoMod.RuntimeDetour.HookGen -Version 22.7.31.1 -OutputDirectory F:\Tools\NuGet\HookGenTemp
 ```
 
-Afterwards, copy the following `.dll` files into the same directory as `MonoMod.RuntimeDetour.HookGen.exe`:
+HookGen requires some additional libraries next to the `.exe` to function. Copy the following files into the same folder as `MonoMod.RuntimeDetour.HookGen.exe`:
 
 ```text
 Mono.Cecil.dll
@@ -88,7 +89,7 @@ Navigate to the directory containing HookGen and run:
 & '.\MonoMod.RuntimeDetour.HookGen.exe' 'S:\Games\SteamLibrary\steamapps\common\Rain World\RainWorld_Data\Managed\Assembly-CSharp.dll'
 ```
 
-This generates the `MMHOOK_Assembly-CSharp.dll` which contains hookable delegate definitions (e.g., `On.NeedleWormAI`).
+This generates the `MMHOOK_Assembly-CSharp.dll` which contains hookable delegate definitions (e.g., `On.NeedleWormAI`). These are essential for reflection-based hooking and proper mod development, making this step absolutely mandatory. When set up correctly, you can even jump into the generated source (e.g., with `Ctrl + B` in JetBrains Rider), which is super helpful.
 
 ### Building
 

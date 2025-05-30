@@ -1,0 +1,10 @@
+{
+    "id": "ecosystemplus",
+    "name": "Ecosystem Plus",
+    "version": "1.0.0",
+    "hide_version": false,
+    "authors": "lisalotl",
+    "description": "Adds dynamic food-seeking behavior, grazing, and hunger to non-player creatures. Enhances ecosystem realism with food competition, AI hibernation, and inter-species predation.",
+    "checksum_override_version": false,
+    "tags": ["Gameplay", "AI", "Ecosystem", "Immersion"]
+}

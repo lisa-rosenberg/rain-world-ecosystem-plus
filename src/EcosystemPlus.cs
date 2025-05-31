@@ -1,5 +1,5 @@
 using BepInEx;
-using BepInEx.Logging;
+using EcosystemPlus.src.Logging;
 
 namespace EcosystemPlus.src
 {
@@ -8,9 +8,24 @@ namespace EcosystemPlus.src
     public class EcosystemPlus : BaseUnityPlugin
     {
 
+        /// <summary>
+        /// Mod name and class name for logging purposes.
+        /// </summary>
+        private static readonly string ModName = typeof(EcosystemPlus).Namespace;
+
+        /// <summary>
+        /// Class name for logging purposes, used to identify the source of log messages.
+        /// </summary>
+        private static readonly string ClassName = typeof(EcosystemPlus).Name;
+
+        /// <summary>
+        /// Mod version, extracted from the assembly information.
+        /// </summary>
+        private static readonly string ModVersion = typeof(EcosystemPlus).Assembly.GetName().Version.ToString();
+
         public void OnEnable()
         {
-            Logger.LogInfo(System.DateTime.Now + " - EcosystemPlus: EcosystemPlus 1.0 is loaded.");
+            ModLogger.Info(Logger, ModName, ClassName, $"{ClassName} {ModVersion} is loaded.");
 
             Behaviors.NeedleWormBehavior.Apply();
         }

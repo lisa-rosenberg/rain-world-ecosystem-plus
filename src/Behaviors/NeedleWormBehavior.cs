@@ -135,7 +135,7 @@ namespace EcosystemPlus.src.Behaviors
                 // Continue grazing: keep destination and decrement counter
                 self.creature.abstractAI.SetDestination(grazing.target);
                 grazing.counter--;
-                ModLogger.Info(Logger, ModName, ClassName, $"Grazing... {grazing.counter} frames left.", creatureId);
+                ModLogger.Debug(Logger, ModName, ClassName, $"Grazing... {grazing.counter} frames left.", creatureId);
                 return;
             }
 
@@ -175,7 +175,7 @@ namespace EcosystemPlus.src.Behaviors
         private static bool RollForGrazing(string creatureId)
         {
             double grazingRoll = rng.NextDouble();
-            ModLogger.Info(Logger, ModName, ClassName, $"Rolling for grazing behavior with result {grazingRoll} (Threshold: {GrazingProbability}). Grazing {(grazingRoll < GrazingProbability ? "successful" : "failed")}.", creatureId);
+            ModLogger.Debug(Logger, ModName, ClassName, $"Rolling for grazing behavior with result {grazingRoll} (Threshold: {GrazingProbability}). Grazing {(grazingRoll < GrazingProbability ? "successful" : "failed")}.", creatureId);
             return grazingRoll < GrazingProbability;
         }
 
@@ -193,7 +193,7 @@ namespace EcosystemPlus.src.Behaviors
             IntVector2 origin = self.creature.pos.Tile;
             Room room = self.creature.Room.realizedRoom;
 
-            ModLogger.Info(Logger, ModName, ClassName, $"Searching for solid tile near [{origin.x}, {origin.y}] in room index {room.abstractRoom.index}.", creatureId);
+            ModLogger.Debug(Logger, ModName, ClassName, $"Searching for solid tile near [{origin.x}, {origin.y}] in room index {room.abstractRoom.index}.", creatureId);
 
             // Pick a random horizontal offset in [-HorizontalRange, HorizontalRange]
             int offset = rng.Next(-HorizontalRange, HorizontalRange + 1);
@@ -237,7 +237,7 @@ namespace EcosystemPlus.src.Behaviors
                 return false;
             }
 
-            ModLogger.Info(Logger, ModName, ClassName, $"{creatureId} is idle.", creatureId);
+            ModLogger.Debug(Logger, ModName, ClassName, $"{creatureId} is idle.", creatureId);
             return true;
         }
     }

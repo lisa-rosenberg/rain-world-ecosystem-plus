@@ -14,7 +14,7 @@ namespace EcosystemPlus.src.Behaviors
     {
 
         /// <summary>
-        /// Mod name and class name for logging purposes.
+        /// Mod name for logging purposes.
         /// </summary>
         private static readonly string ModName = EcosystemPlus.ModName;
 

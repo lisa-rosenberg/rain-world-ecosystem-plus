@@ -9,7 +9,7 @@ namespace EcosystemPlus.src
     {
 
         /// <summary>
-        /// Mod name and class name for logging purposes.
+        /// Mod name for logging purposes.
         /// </summary>
         public static readonly string ModName = typeof(EcosystemPlus).Namespace?.Split('.')[0];
 

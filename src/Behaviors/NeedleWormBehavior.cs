@@ -2,6 +2,7 @@ using BepInEx.Logging;
 using RWCustom;
 using UnityEngine;
 using EcosystemPlus.src.Logging;
+using EcosystemPlus.src;
 
 namespace EcosystemPlus.src.Behaviors
 {
@@ -15,7 +16,7 @@ namespace EcosystemPlus.src.Behaviors
         /// <summary>
         /// Mod name and class name for logging purposes.
         /// </summary>
-        private static readonly string ModName = typeof(NeedleWormBehavior).Namespace;
+        private static readonly string ModName = EcosystemPlus.ModName;
 
         /// <summary>
         /// Class name for logging purposes, used to identify the source of log messages.

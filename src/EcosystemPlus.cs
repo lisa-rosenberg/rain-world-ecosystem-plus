@@ -11,7 +11,7 @@ namespace EcosystemPlus.src
         /// <summary>
         /// Mod name and class name for logging purposes.
         /// </summary>
-        private static readonly string ModName = typeof(EcosystemPlus).Namespace;
+        public static readonly string ModName = typeof(EcosystemPlus).Namespace?.Split('.')[0];
 
         /// <summary>
         /// Class name for logging purposes, used to identify the source of log messages.
